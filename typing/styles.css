@@ -1,39 +1,112 @@
 body {
-    background-color: black; /* Entire background set to black */
-    color: white; /* Text color set to white for contrast */
+    background-color: rgb(0, 0, 0);
+    color: white;
     font-family: Arial, sans-serif;
     text-align: center;
-    padding: 50px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #word-box, #timer, #results {
     margin: 20px;
-    padding: 15px; /* Increased padding for better visual balance */
-    font-size: 24px; /* Larger font size for enhanced readability */
-    background-color: black; /* Elements blend with the background */
-    color: white; /* Ensures text is visible */
-    border: none; /* No border for a seamless look */
+    padding: 15px;
+    font-size: 35px;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    border: none;
 }
 
 #input-box {
-    width: 350px; /* Wider input box to accommodate larger text */
+    width: 350px;
     padding: 15px;
     font-size: 24px;
-    background-color: black; /* Input box blends with the background */
+    background-color: black;
     color: white;
-    border: 2px solid #555; /* Subtle border to identify input area */
-    outline: none; /* No focus outline to maintain a clean appearance */
+    border: 2px solid #555;
+    outline: none;
 }
 
-#input-box:focus {
-    border-color: #777; /* Slightly lighter border on focus for visibility */
+.current-word { color: green; }
+.incorrect { color: red; }
+
+#retry-button {
+    display: none;
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #444;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+#retry-button:hover { background-color: #666; }
+
+#leaderboard-container {
+    position: fixed;
+    right: -300px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 250px;
+    background-color: black;
+    color: white;
+    padding: 20px;
+    border: 2px solid white;
+    border-radius: 10px;
+    transition: right 0.3s ease-in-out;
 }
 
-.current-word {
-    color: green; /* Current word highlighted in green unless incorrect */
-    font-weight: normal; /* Maintain normal weight for readability */
+#leaderboard { text-align: left; }
+#leaderboard h2 {
+    border-bottom: 2px solid white;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
 }
 
-.incorrect {
-    color: red; /* Incorrect words highlighted in red for clear feedback */
+#toggle-leaderboard {
+    position: fixed;
+    right: -30px;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #444;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: right 0.3s ease-in-out;
+}
+#toggle-leaderboard:hover { background-color: #666; }
+#input-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#retry-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #444;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#retry-button:hover { 
+    background-color: #666; 
+}
+#result-text {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #00ff00;
+    display: none;
 }

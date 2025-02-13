@@ -1,6 +1,8 @@
-document.addEventListener('DOMContentLoaded', function() {
-    loadNewWordSet(); // Load the initial set of words right away
-    document.getElementById('word-box').style.visibility = "visible"; // Make words visible initially
+document.addEventListener('DOMContentLoaded', function () {
+    loadNewWordSet();
+    document.getElementById('word-box').style.visibility = "visible";
+    displayLeaderboard();
+    document.getElementById('toggle-leaderboard').addEventListener('click', toggleLeaderboard);
 });
 
 let timer = 60;
@@ -8,22 +10,24 @@ let isRunning = false;
 let interval;
 let correctWords = 0;
 let incorrectWords = 0;
-let currentSet = [];
+let totalCharactersTyped = 0; // Track total characters typed
 let wordIndex = 0;
 
-document.getElementById('input-box').addEventListener('input', function(event) {
-    if (!isRunning && this.value !== "") {
+document.getElementById('input-box').addEventListener('input', function (event) {
+    if (this.value === " ") {
+        this.value = "";
+        return;
+    }
+    if (!isRunning && this.value.trim() !== "") {
         startTest();
     }
-    // Real-time letter-by-letter checking
-    if (this.value.slice(-1) === " ") {
-        // When space is pressed, evaluate the word and reset for the next one
+    if (this.value.trim() !== "" && this.value.slice(-1) === " ") {
         checkWord();
-        this.value = ''; // Clear input box immediately after space
+        this.value = '';
     } else {
-        // Continuous check as user types
         validateCurrentInput(this.value);
     }
+    updateLiveWPM();
 });
 
 function startTest() {
@@ -37,16 +41,16 @@ function updateTimer() {
         document.getElementById('timer').textContent = timer;
     } else {
         clearInterval(interval);
-        document.getElementById('results').textContent = `Time's up! Your WPM is ${correctWords}`;
-        document.getElementById('input-box').disabled = true;
+        document.getElementById('input-box').disabled = true; // Disable input box after time ends
+        showResults(); // Show results as a paragraph
     }
 }
 
 function checkWord() {
-    const inputBox = document.getElementById('input-box');
-    const wordBox = document.getElementById('word-box');
-    const words = wordBox.textContent.split(/\s+/);
-    const currentInput = inputBox.value.trim();
+    const words = document.getElementById('word-box').textContent.split(/\s+/);
+    const currentInput = document.getElementById('input-box').value.trim();
+
+    totalCharactersTyped += currentInput.length + 1; // Add typed characters (+1 for space)
 
     if (currentInput === words[wordIndex]) {
         correctWords++;
@@ -64,12 +68,8 @@ function checkWord() {
 }
 
 function validateCurrentInput(currentInput) {
-    const wordBox = document.getElementById('word-box');
-    const words = wordBox.textContent.split(/\s+/);
-    const targetWord = words[wordIndex];
-
-    // Highlight the word if the current input does not match the beginning of the target word
-    updateWordBox(words, !targetWord.startsWith(currentInput));
+    const words = document.getElementById('word-box').textContent.split(/\s+/);
+    updateWordBox(words, !words[wordIndex].startsWith(currentInput));
 }
 
 function loadNewWordSet() {
@@ -79,20 +79,80 @@ function loadNewWordSet() {
 }
 
 function generateRandomWords(count) {
-    const wordPool = ["example", "random", "test", "words", "javascript", "challenge", "speed", "accuracy", "keyboard", "practice", "session", "improve", "skills", "typing", "text"];
-    let words = [];
-    for (let i = 0; i < count; i++) {
-        words.push(wordPool[Math.floor(Math.random() * wordPool.length)]);
-    }
-    return words;
+    const wordPool = ["apple", "banana", "orange", "grape", "water", "happy", "love", "friend", "sun", "moon",
+        "light", "dark", "strong", "weak", "fast", "slow", "run", "walk", "jump", "play"];
+    return Array.from({ length: count }, () => wordPool[Math.floor(Math.random() * wordPool.length)]);
 }
 
 function updateWordBox(words, isError) {
-    const markedWords = words.map((word, index) => {
-        if (index === wordIndex) {
-            return `<span class="current-word ${isError ? 'incorrect' : ''}">${word}</span>`;
+    document.getElementById('word-box').innerHTML = words.map((word, index) =>
+        `<span class="${index === wordIndex ? (isError ? 'current-word incorrect' : 'current-word') : ''}">${word}</span>`
+    ).join(" ");
+}
+
+// **Updated WPM Calculation (10FastFingers Style)**
+function calculateWPM() {
+    return Math.round((totalCharactersTyped / 5) / (60 / 60)); // (Characters / 5) ÷ (Seconds / 60)
+}
+
+function showResults() {
+    let finalWPM = calculateWPM();
+    document.getElementById('result-text').textContent = `Your WPM is ${finalWPM}`;
+    document.getElementById('result-text').style.display = "block";
+
+    checkHighScore(finalWPM);
+}
+
+// **Leaderboard Logic**
+function checkHighScore(score) {
+    let leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+
+    if (leaderboard.length < 3 || score > leaderboard[leaderboard.length - 1].score) {
+        let userName = prompt("🎉 You made it to the leaderboard! Enter your name:");
+        if (userName) {
+            leaderboard.push({ name: userName, score: score });
+            leaderboard.sort((a, b) => b.score - a.score); // Sort in descending order
+
+            if (leaderboard.length > 3) leaderboard.pop(); // Keep only top 3 scores
         }
-        return `<span>${word}</span>`;
-    });
-    document.getElementById('word-box').innerHTML = markedWords.join(" ");
+    }
+
+    localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
+    displayLeaderboard();
+}
+
+function displayLeaderboard() {
+    let leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+    document.getElementById('leaderboard').innerHTML = "<h2>Leaderboard</h2>" +
+        leaderboard.map((entry, index) => `<p>${index + 1}. ${entry.name} - ${entry.score} WPM</p>`).join("");
+}
+
+function restartTest() {
+    clearInterval(interval);
+    document.getElementById('input-box').value = "";
+    document.getElementById('input-box').disabled = false;
+    document.getElementById('timer').textContent = "60";
+    correctWords = 0;
+    timer = 60;
+    incorrectWords = 0;
+    totalCharactersTyped = 0; // Reset character count
+    wordIndex = 0;
+    document.getElementById('correct-count').textContent = "0";
+    document.getElementById('incorrect-count').textContent = "0";
+    document.getElementById('result-text').style.display = "none"; // Hide the result text when retrying
+    loadNewWordSet();
+    isRunning = false;
+}
+
+function toggleLeaderboard() {
+    const leaderboardContainer = document.getElementById('leaderboard-container');
+    const toggleButton = document.getElementById('toggle-leaderboard');
+
+    if (leaderboardContainer.style.right === "10px") {
+        leaderboardContainer.style.right = "-300px";
+        toggleButton.style.right = "-30px";
+    } else {
+        leaderboardContainer.style.right = "10px";
+        toggleButton.style.right = "270px";
+    }
 }
