@@ -37,18 +37,6 @@ body {
 .current-word { color: green; }
 .incorrect { color: red; }
 
-#retry-button {
-    display: none;
-    margin-top: 10px;
-    padding: 10px 20px;
-    font-size: 18px;
-    background-color: #444;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-#retry-button:hover { background-color: #666; }
-
 #leaderboard-container {
     position: fixed;
     right: -300px;
@@ -76,14 +64,14 @@ body {
     top: 50%;
     transform: translateY(-50%) rotate(90deg);
     padding: 10px 15px;
-    font-size: 16px;
-    background-color: #444;
+    font-size: 20px;
+    background-color: #000000;
     color: white;
-    border: none;
+    border: 2px solid rgb(59, 58, 58);
     cursor: pointer;
     transition: right 0.3s ease-in-out;
 }
-#toggle-leaderboard:hover { background-color: #666; }
+
 #input-container {
     display: flex;
     align-items: center;
@@ -93,20 +81,17 @@ body {
 #retry-button {
     display: inline-block;
     padding: 10px 20px;
-    font-size: 18px;
-    background-color: #444;
+    font-size: 30px;
+    background-color: #000000;
     color: white;
-    border: none;
+    border: 2px solid rgb(59, 58, 58);
     cursor: pointer;
 }
 
-#retry-button:hover { 
-    background-color: #666; 
-}
 #result-text {
     margin-top: 20px;
     font-size: 20px;
     font-weight: bold;
-    color: #00ff00;
+    color: #ffffff;
     display: none;
 }
