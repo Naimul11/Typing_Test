@@ -78,9 +78,10 @@ function loadNewWordSet() {
     wordIndex = 0;
 }
 
+
 function generateRandomWords(count) {
     const wordPool = [
-        // Short words (4-5 characters)
+        // Short words (5 characters)
         "apple", "grape", "happy", "light", "music", "ocean", "water", "cloud", "phone", "mouse",
         "train", "green", "black", "white", "river", "chair", "table", "story", "paper", "money",
         "brick", "glass", "plant", "shirt", "sound", "spoon", "bread", "grill", "skirt", "jelly",
@@ -90,7 +91,19 @@ function generateRandomWords(count) {
         "spade", "pearl", "scent", "lunar", "novel", "wagon", "charm", "carol", "dough", "swirl",
         "frost", "crown", "badge", "spark", "flute", "chill", "coast", "straw", "blaze", "glove",
         "brave", "serum", "candy", "hazel", "slate", "maple", "petal", "cocoa", "ivory", "trend",
-        "marsh", "slope", "coral", "quest", "drift", "brisk", "pouch", "scarf", "gloom", "latch"
+        "marsh", "slope", "coral", "quest", "drift", "brisk", "pouch", "scarf", "gloom", "latch",
+        
+        // Additional 100 words (5 characters each)
+        "cabin", "grasp", "sweep", "chime", "whale", "crisp", "shiny", "spike", "swamp", "chili",
+        "spoon", "brace", "jolly", "sneak", "flake", "eagle", "whisk", "cider", "spine", "twist",
+        "crane", "clash", "flock", "grove", "quilt", "brisk", "chess", "stark", "wrist", "prune",
+        "grind", "quirk", "swoop", "tulip", "swoop", "hefty", "beech", "twine", "clamp", "swarm",
+        "spear", "orbit", "plumb", "chord", "slick", "gleam", "mirth", "spurt", "glaze", "plush",
+        "folly", "perch", "plume", "grill", "swish", "wring", "prism", "slope", "swoop", "scout",
+        "mossy", "coven", "flair", "glint", "scarf", "singe", "drain", "shrub", "spurt", "swirl",
+        "petty", "throb", "swarm", "shard", "faint", "skate", "fluke", "creep", "trout", "chime",
+        "sworn", "snipe", "plush", "spree", "froth", "chili", "quirk", "prong", "charm", "fable",
+        "pluck", "swoop", "gravy", "snore", "swath", "smock", "drape", "vivid", "spine", "cliff"
     ];
 
     return Array.from({ length: count }, () => wordPool[Math.floor(Math.random() * wordPool.length)]);
