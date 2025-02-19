@@ -80,25 +80,22 @@ function loadNewWordSet() {
 
 function generateRandomWords(count) {
     const wordPool = [
-        // Short words (3-5 characters)
+        // Short words (4-5 characters)
         "apple", "grape", "happy", "light", "music", "ocean", "water", "cloud", "phone", "mouse",
         "train", "green", "black", "white", "river", "chair", "table", "story", "paper", "money",
-
-        // Medium words (6-7 characters)
-        "banana", "orange", "camera", "laptop", "family", "school", "purple", "bridge", "winner", "reader",
-        "valley", "forest", "stadium", "banking", "coaster", "machine", "product", "airport", "giraffe", "teacher",
-
-        // Longer words (7-8 characters)
-        "elephant", "football", "hospital", "computer", "keyboard", "sunshine", "children", "internet", "airplane", "building",
-        "backpack", "mountain", "magazine", "festival", "strategy", "umbrella", "decision", "sandwich", "favourite", "vacation",
-
-        // Extra variety
-        "business", "chocolate", "motorcycle", "universe", "yesterday", "diameter", "triangle", "landscape", "whisper", "fireworks",
-        "adventure", "developer", "fantastic", "electric", "concrete", "daughter", "painting", "shoulder", "shopping", "envelope"
+        "brick", "glass", "plant", "shirt", "sound", "spoon", "bread", "grill", "skirt", "jelly",
+        "piano", "world", "space", "field", "grass", "tiger", "horse", "zebra", "beach", "storm",
+        "flame", "smoke", "sugar", "lemon", "melon", "grape", "chess", "block", "angle", "frame",
+        "honey", "snack", "fruit", "juice", "swing", "pride", "cliff", "daisy", "toast", "fence",
+        "spade", "pearl", "scent", "lunar", "novel", "wagon", "charm", "carol", "dough", "swirl",
+        "frost", "crown", "badge", "spark", "flute", "chill", "coast", "straw", "blaze", "glove",
+        "brave", "serum", "candy", "hazel", "slate", "maple", "petal", "cocoa", "ivory", "trend",
+        "marsh", "slope", "coral", "quest", "drift", "brisk", "pouch", "scarf", "gloom", "latch"
     ];
-    
+
     return Array.from({ length: count }, () => wordPool[Math.floor(Math.random() * wordPool.length)]);
 }
+
 
 
 function updateWordBox(words, isError) {
