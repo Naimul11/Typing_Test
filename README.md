@@ -1,1 +1,1 @@
-live site ::-  https://naimul11.github.io/Typing_contest/
+live site ::-  https://naimul11.github.io/Typing_Test/
