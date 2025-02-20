@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center;
+             background-color: #000000; color: rgb(255, 255, 255);
+            
+            }
+        table { width: 80%; margin: auto; border-collapse: collapse; }
+        th, td { padding: 10px; border: 1px solid rgb(255, 255, 255); }
+        th { background-color: #000000; color: rgb(255, 255, 255); }
+    </style>
+</head>
+<body>
+    <h1>Leaderboard</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>WPM</th>
+                <th>Incorrect Words</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody id="leaderboard-body">
+            <tr><td colspan="4">Loading...</td></tr>
+        </tbody>
+    </table>
+    
+    <script>
+        const sheetUrl = "https://script.google.com/macros/s/AKfycbwJC2qPVKF-NIdKgX8Df4w6Dr7fF4LLYKwG97g-bT8VDuUuq5Ox02EGD-m7rWnNlIOf4g/exec";
+        
+        async function fetchLeaderboard() {
+            try {
+                const response = await fetch(sheetUrl);
+                const data = await response.json();
+                
+                const tbody = document.getElementById("leaderboard-body");
+                tbody.innerHTML = "";
+                
+                data.forEach(entry => {
+                    const row = `<tr>
+                        <td>${entry.name}</td>
+                        <td>${entry.wpm}</td>
+                        <td>${entry.incorrect}</td>
+                        <td>${new Date(entry.date).toLocaleString()}</td>
+                    </tr>`;
+                    tbody.innerHTML += row;
+                });
+            } catch (error) {
+                console.error("Error fetching leaderboard:", error);
+                document.getElementById("leaderboard-body").innerHTML = "<tr><td colspan='4'>Failed to load data</td></tr>";
+            }
+        }
+        
+        fetchLeaderboard();
+        setInterval(fetchLeaderboard, 20000);
+    </script>
+</body>
+</html>

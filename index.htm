@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Typing Test</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
     <div id="content-container">
         <div id="word-box" style="visibility: hidden;"></div>
 
         <div id="input-container">
-            <input type="text" id="input-box" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+            <input type="text" id="input-box" autocomplete="off" autocorrect="off" autocapitalize="off"
+                spellcheck="false">
             <button id="retry-button" onclick="restartTest()">Retry</button>
         </div>
         <br>
@@ -26,11 +29,16 @@
     </div>
 
     <button id="toggle-leaderboard">Leaderboard</button>
-    <button id="reset-leaderboard" style="position: fixed; top: 10px; left: 10px; padding: 10px; background-color: black; color: white; border: none; cursor: pointer;"></button>
     <div id="leaderboard-container">
         <div id="leaderboard"></div>
+        <button id="reset-leaderboard">RESET</button>
     </div>
-    
+
+    </div>
+
+    <button id="fullLeaderboard" onclick="window.location.href='leaderboard.htm';"
+        style="position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);">Full Leaderboard</button>
     <script src="script.js"></script>
 </body>
+
 </html>

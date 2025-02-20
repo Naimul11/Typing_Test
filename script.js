@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('toggle-leaderboard').addEventListener('click', toggleLeaderboard);
 });
 
-let timer = 60;
+let timer = 5;
 let isRunning = false;
 let interval;
 let correctWords = 0;
@@ -205,14 +205,14 @@ function toggleLeaderboard() {
 }
 
 document.getElementById('reset-leaderboard').addEventListener('click', function () {
-    let password = prompt('Enter the reset password:');
-    if (password === 'naimulislam1') {
+    // let password = prompt('Enter the reset password:');
+    // if (password === 'admin') {
         localStorage.removeItem('leaderboard');
-        alert('Leaderboard has been reset!');
+        // alert('Leaderboard has been reset!');
         displayLeaderboard();
-    } else {
-        alert('Incorrect password!');
-    }
+    // } else {
+    //     alert('Incorrect password!');
+    // }
 });
 
 
