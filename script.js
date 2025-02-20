@@ -49,16 +49,17 @@ function updateTimer() {
 function checkWord() {
     const words = document.getElementById('word-box').textContent.split(/\s+/);
     const currentInput = document.getElementById('input-box').value.trim();
+    const currentWord = words[wordIndex];
 
-    totalCharactersTyped += currentInput.length + 1; // Add typed characters (+1 for space)
-
-    if (currentInput === words[wordIndex]) {
+    if (currentInput === currentWord) {
+        totalCharactersTyped += currentWord.length + 1; // Include space after the word
         correctWords++;
         document.getElementById('correct-count').textContent = correctWords;
     } else {
         incorrectWords++;
         document.getElementById('incorrect-count').textContent = incorrectWords;
     }
+    
     wordIndex++;
     if (wordIndex >= words.length) {
         loadNewWordSet();
@@ -67,10 +68,22 @@ function checkWord() {
     }
 }
 
+
 function validateCurrentInput(currentInput) {
     const words = document.getElementById('word-box').textContent.split(/\s+/);
-    updateWordBox(words, !words[wordIndex].startsWith(currentInput));
+    const currentWord = words[wordIndex];
+
+    let correctChars = 0;
+    for (let i = 0; i < currentInput.length; i++) {
+        if (currentInput[i] === currentWord[i]) {
+            correctChars++;
+        }
+    }
+
+    totalCharactersTyped += correctChars; // Only add correctly matched characters
+    updateWordBox(words, currentInput !== currentWord.slice(0, currentInput.length));
 }
+
 
 function loadNewWordSet() {
     currentSet = generateRandomWords(10);
