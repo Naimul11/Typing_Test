@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('toggle-leaderboard').addEventListener('click', toggleLeaderboard);
 });
 
-let timer = 60;
+let timer = 5;
 let isRunning = false;
 let interval;
 let correctWords = 0;
@@ -27,7 +27,6 @@ document.getElementById('input-box').addEventListener('input', function (event) 
     } else {
         validateCurrentInput(this.value);
     }
-    updateLiveWPM();
 });
 
 function startTest() {
@@ -143,17 +142,31 @@ function checkHighScore(score) {
 
     if (leaderboard.length < 3 || score > leaderboard[leaderboard.length - 1].score) {
         let userName = prompt("🎉 You made it to the leaderboard! Enter your name:");
+        
         if (userName) {
-            leaderboard.push({ name: userName, score: score });
-            leaderboard.sort((a, b) => b.score - a.score); // Sort in descending order
+            let incorrectWords = document.getElementById('incorrect-count').textContent;
 
-            if (leaderboard.length > 3) leaderboard.pop(); // Keep only top 3 scores
+            leaderboard.push({ name: userName, score: score });
+            leaderboard.sort((a, b) => b.score - a.score);
+            
+            if (leaderboard.length > 3) leaderboard.pop();
+            
+            localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
+            displayLeaderboard();
+
+            fetch("https://script.google.com/macros/s/AKfycby_ZXEl0oWwVpnh7aHPpr8nx-CZ0EcDVmU1542E4GMVWAXzAoNVvLeu6qGq33gvV9z_9A/exec", {
+                method: "POST",
+                mode: "no-cors",  
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name: userName, wpm: score, incorrect: incorrectWords })
+            })
+            .then(response => console.log("Data sent successfully"))
+            .catch(error => console.error("Fetch Error:", error));            
+            
         }
     }
-
-    localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
-    displayLeaderboard();
 }
+
 
 function displayLeaderboard() {
     let leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
@@ -190,3 +203,16 @@ function toggleLeaderboard() {
         toggleButton.style.right = "270px";
     }
 }
+
+document.getElementById('reset-leaderboard').addEventListener('click', function () {
+    let password = prompt('Enter the reset password:');
+    if (password === 'naimulislam1') {
+        localStorage.removeItem('leaderboard');
+        alert('Leaderboard has been reset!');
+        displayLeaderboard();
+    } else {
+        alert('Incorrect password!');
+    }
+});
+
+
