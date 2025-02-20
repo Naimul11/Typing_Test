@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('toggle-leaderboard').addEventListener('click', toggleLeaderboard);
 });
 
-let timer = 5;
+let timer = 60;
 let isRunning = false;
 let interval;
 let correctWords = 0;
