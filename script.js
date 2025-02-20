@@ -92,7 +92,7 @@ function validateCurrentInput(currentInput) {
 }
 
 function loadNewWordSet() {
-    currentSet = generateRandomWords(10);
+    currentSet = generateRandomWords(8);
     updateWordBox(currentSet, false);
     wordIndex = 0;
 }
