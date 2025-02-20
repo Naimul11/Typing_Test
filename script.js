@@ -66,6 +66,15 @@ function checkWord() {
 
     totalCharactersTyped += correctChars;
         
+        if (incorrectWords > 20) {
+            clearInterval(interval);
+            document.getElementById('input-box').disabled = true; // Disable input box
+            alert("Too many mistakes! Please retry.");
+            document.getElementById('result-text').textContent = "Your WPM is NaN";
+            document.getElementById('result-text').style.display = "block";
+            return;
+        }
+        
         incorrectWords++;
         document.getElementById('incorrect-count').textContent = incorrectWords;
     }
