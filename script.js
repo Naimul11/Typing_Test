@@ -154,7 +154,7 @@ function checkHighScore(score) {
             localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
             displayLeaderboard();
 
-            fetch("https://script.google.com/macros/s/AKfycby_ZXEl0oWwVpnh7aHPpr8nx-CZ0EcDVmU1542E4GMVWAXzAoNVvLeu6qGq33gvV9z_9A/exec", {
+            fetch("https://script.google.com/macros/s/AKfycbyfDYqdSgoQrcWvK8V8i1nZpiMrytSme4GlXCKrBB1DrQA7JeCPAwnl8hnFu5do2-2dbw/exec", {
                 method: "POST",
                 mode: "no-cors",  
                 headers: { "Content-Type": "application/json" },
