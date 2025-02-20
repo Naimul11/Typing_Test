@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('toggle-leaderboard').addEventListener('click', toggleLeaderboard);
 });
 
-let timer = 5;
+let timer = 60;
 let isRunning = false;
 let interval;
 let correctWords = 0;
@@ -154,7 +154,7 @@ function checkHighScore(score) {
             localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
             displayLeaderboard();
 
-            fetch("https://script.google.com/macros/s/AKfycbyfDYqdSgoQrcWvK8V8i1nZpiMrytSme4GlXCKrBB1DrQA7JeCPAwnl8hnFu5do2-2dbw/exec", {
+            fetch("https://script.google.com/macros/s/AKfycbyWFEMnXydEmTw_MnjkTHdvtpBJZtQCF4MTKGyIQvP5bMd0NMlikCCcM3NqgQwQKg_VGA/exec", {
                 method: "POST",
                 mode: "no-cors",  
                 headers: { "Content-Type": "application/json" },
