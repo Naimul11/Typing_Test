@@ -49,40 +49,13 @@ function updateTimer() {
 function checkWord() {
     const words = document.getElementById('word-box').textContent.split(/\s+/);
     const currentInput = document.getElementById('input-box').value.trim();
-    const currentWord = words[wordIndex];
 
-    if (currentInput === currentWord) {
-        totalCharactersTyped += currentWord.length + 1; // Include space after the word
+    if (currentInput === words[wordIndex]) {
+        totalCharactersTyped += currentInput.length + 1;
         correctWords++;
         document.getElementById('correct-count').textContent = correctWords;
     } else {
-        incorrectWords++;
-        document.getElementById('incorrect-count').textContent = incorrectWords;
-        
-        if (incorrectWords > 20) {
-            clearInterval(interval);
-            document.getElementById('input-box').disabled = true; // Disable input box
-            alert("Too many mistakes! Please retry.");
-            document.getElementById('result-text').textContent = "Your WPM is NaN";
-            document.getElementById('result-text').style.display = "block";
-            return;
-        }
-    }
-    
-    wordIndex++;
-    if (wordIndex >= words.length) {
-        loadNewWordSet();
-    } else {
-        updateWordBox(words, false);
-    }
-}
-
-
-
-
-function validateCurrentInput(currentInput) {
-    const words = document.getElementById('word-box').textContent.split(/\s+/);
-    const currentWord = words[wordIndex];
+        const currentWord = words[wordIndex];
 
     let correctChars = 0;
     for (let i = 0; i < currentInput.length; i++) {
@@ -91,10 +64,23 @@ function validateCurrentInput(currentInput) {
         }
     }
 
-    totalCharactersTyped += correctChars; // Only add correctly matched characters
-    updateWordBox(words, currentInput !== currentWord.slice(0, currentInput.length));
+    totalCharactersTyped += correctChars;
+        
+        incorrectWords++;
+        document.getElementById('incorrect-count').textContent = incorrectWords;
+    }
+    wordIndex++;
+    if (wordIndex >= words.length) {
+        loadNewWordSet();
+    } else {
+        updateWordBox(words, false);
+    }
 }
 
+function validateCurrentInput(currentInput) {
+    const words = document.getElementById('word-box').textContent.split(/\s+/);
+    updateWordBox(words, !words[wordIndex].startsWith(currentInput));
+}
 
 function loadNewWordSet() {
     currentSet = generateRandomWords(10);
